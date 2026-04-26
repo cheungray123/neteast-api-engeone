@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "edgeone-pages-deploy": {
+      "source": "edgeone-pages/edgeone-pages-skills",
+      "sourceType": "github",
+      "computedHash": "a1c4ea86bcb2d09892da4952a1befe03f94df6c48804525619ecdff4924c819c"
+    },
+    "edgeone-pages-dev": {
+      "source": "edgeone-pages/edgeone-pages-skills",
+      "sourceType": "github",
+      "computedHash": "f2f5644a4878f09c43627bc569fbe021617a978cd011c2d531d0032a9baea9fd"
+    }
+  }
+}

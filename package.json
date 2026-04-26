@@ -10,6 +10,7 @@
     "env-pull": "edgeone pages env pull"
   },
   "dependencies": {
-    "crypto-js": "^4.2.0"
+    "crypto-js": "^4.2.0",
+    "hono": "^4.12.15"
   }
 }

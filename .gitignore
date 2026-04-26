@@ -8,6 +8,9 @@ node_modules/
 # CLI artifacts
 .edgeone/
 
+# Skill caches
+.agents/
+
 # OS files
 .DS_Store
 Thumbs.db
