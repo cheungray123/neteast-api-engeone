@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-网易云音乐 API，基于 EdgeOne Pages Cloud Functions 部署，全球边缘加速，支持完整缓存、重试、超时保护。
+网易云音乐 API，基于 EdgeOne Pages Cloud Functions 部署（Node.js 20 运行时）。
 
 **Platform**: EdgeOne Pages | **Runtime**: Node.js 20 (Cloud Functions)
 
@@ -22,10 +22,10 @@ npx edgeone pages deploy       # 部署到生产环境
 
 ```
 ├── cloud-functions/
-│   └── [[default]].js         # EdgeOne 入口 — CORS、限流、路由分发
+│   └── index.js               # EdgeOne 入口 — CORS、限流、路由分发
 ├── request.js                 # 请求处理与路由分发
 ├── modules/                   # API 模块目录（85+ 个接口）
-│   ├── index.js               # 模块索引（自动生成）
+│   ├── index.js               # 模块索引
 │   ├── search.js              # 搜索相关
 │   ├── song_detail.js         # 歌曲详情
 │   ├── song_url.js            # 歌曲链接
@@ -36,7 +36,7 @@ npx edgeone pages deploy       # 部署到生产环境
 │   ├── login_*.js             # 登录相关
 │   └── ...
 └── util/
-    ├── crypto.js              # AES/RSA 加密
+    ├── crypto.js              # AES/RSA/MD5 加密
     ├── fetch.js               # HTTP 请求（缓存/重试/超时）
     ├── option.js              # 请求选项
     ├── helper.js              # 辅助函数
@@ -47,17 +47,17 @@ npx edgeone pages deploy       # 部署到生产环境
 ## Architecture
 
 **请求流程**:
-1. `cloud-functions/[[default]].js` 接收请求 → CORS → 限流 → Cookie 解析
+1. `cloud-functions/index.js` 接收请求 → CORS → 限流 → Cookie 解析
 2. 调用 `request.js` 处理
 3. `pathToModuleName()` 将路径转为模块名（`/search` → `search`, `/song/detail` → `song_detail`）
 4. 调用对应模块 → 模块调用 `request(uri, data, options)` 发起请求
 5. `fetch.js` 负责加密请求、发送网易云 API、缓存响应
 
-**入口函数** (cloud-functions/[[default]].js):
+**入口函数** (cloud-functions/index.js):
 ```javascript
 export async function onRequest(context) {
-  const { request, env, clientIp } = context
-  // CORS / 限流 / 路由分发
+  const { request, env } = context
+  // 使用 Hono 框架
 }
 ```
 
@@ -80,7 +80,7 @@ export async function onRequest(context) {
 ### 请求配置 (fetch.js)
 - 超时：10s
 - 重试：最多 2 次，延迟 500ms * (attempt + 1)
-- User-Agent：根据客户端类型变化
+- User-Agent：默认移动端 iPhone
 
 ## Environment Variables
 
@@ -114,15 +114,6 @@ export default (query, request) => {
    - `/search` → `search`
    - `/song/detail` → `song_detail`
    - `/a/b/c` → `a_b_c`
-
-## Memory Cache Usage
-
-```javascript
-import { KVStore } from './util/kv-store.js'
-const store = new KVStore(null)
-await store.get('key')
-await store.set('key', 'value', ttl)
-```
 
 ## Response Format
 

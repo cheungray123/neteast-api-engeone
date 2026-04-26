@@ -208,7 +208,5 @@ app.onError((err, c) => {
   return c.json({ code: 500, data: null, msg: err.message || 'Internal Server Error' }, 500)
 })
 
-// EdgeOne Cloud Functions 入口
-export async function onRequest(context) {
-  return app.fetch(context.request, context.env, context)
-}
+// EdgeOne Cloud Functions 入口 — 直接导出 Hono app
+export default app
