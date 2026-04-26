@@ -6,7 +6,7 @@
 
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { handleRequest, getAvailableModules } from '../request.js'
+import { handleRequest, getAvailableModules } from './request.js'
 
 // 性能指标
 const metrics = {
