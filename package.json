@@ -1,0 +1,15 @@
+{
+  "name": "ncm-api-edgeone",
+  "version": "2.0.0",
+  "description": "网易云音乐 API - EdgeOne Pages Cloud Functions 版本",
+  "type": "module",
+  "scripts": {
+    "dev": "edgeone pages dev",
+    "deploy": "edgeone pages deploy",
+    "link": "edgeone pages link",
+    "env-pull": "edgeone pages env pull"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  }
+}

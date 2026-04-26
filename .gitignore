@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment variables (敏感信息)
+.dev.vars
+.env
+
+# CLI artifacts
+.edgeone/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
